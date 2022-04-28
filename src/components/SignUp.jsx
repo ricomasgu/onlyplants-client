@@ -14,10 +14,12 @@ const SignUp = () => {
   const [password, setPassword] = useState('')
   const [avatarUrl, setAvatarUrl] = useState('')
 
-
+  const onSubmit = ( event ) => {
+    event.preventDefault()
+  }
 
   return (
-    <form>
+    <form onSubmit={ onSubmit } >
       <FormControl isRequired>
         <Input 
           id='first-name'
@@ -68,7 +70,7 @@ const SignUp = () => {
         src={ avatarUrl }
         name={ firstName === '' || lastName === '' ? null :  `${firstName} ${lastName}` }
       />
-      
+
       <Input
         id='avatar'
         type='file'
