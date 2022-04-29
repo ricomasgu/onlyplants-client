@@ -1,12 +1,19 @@
 import React from 'react';
-import Navbar from './components/Navbar';
-import SignUp from './components/SignUp';
+import { Routes, Route } from 'react-router-dom';
+
+// import SignUp from './components/SignUp';
+import AddPost from './views/AddPost';
+import HomePlaceholder from './views/HomePlaceholder';
 
 function App() {
 	return (
 		<div className="App">
-			<Navbar />
-			<SignUp />
+			<Routes>
+				<Route path="/" element={<HomePlaceholder />} />
+				<Route path="/post" element={<AddPost />} />
+			</Routes>
+
+			{/* <SignUp /> */}
 		</div>
 	);
 }
