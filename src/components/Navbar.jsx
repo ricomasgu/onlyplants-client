@@ -17,7 +17,7 @@ const Navbar = () => {
 		console.log('Clicked');
 	};
 	return (
-		<div>
+		<div className="navbar">
 			<nav>
 				<Flex alignItems="center">
 					<Spacer />
@@ -40,7 +40,7 @@ const Navbar = () => {
 						<Center gap="2">
 							<Avatar src="" size="sm" />
 							<Wrap>
-								<Center gap="2">
+								<Center gap="4">
 									<Link to="/post">Profile</Link>
 									<Button onClick={handleLogout} size="sm">
 										Logout
