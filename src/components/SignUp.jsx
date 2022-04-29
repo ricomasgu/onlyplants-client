@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import axios from 'axios'
 import { 
   FormControl, 
   Input,
@@ -12,10 +13,26 @@ const SignUp = () => {
   const [email, setEmail] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [avatarUrl, setAvatarUrl] = useState('')
+  const [avatar, setAvatar] = useState('')
 
-  const onSubmit = ( event ) => {
-    event.preventDefault()
+  const onSubmit = async ( event ) => {
+    event.preventDefault();
+
+    const resFromApi = await axios.post('http://localhost:5005/api/auth/signup', {
+      firstName,
+      lastName,
+      email,
+      username,
+      password,
+      avatar
+    },
+    { 
+      withCredentials: true
+    })
+
+    console.log(resFromApi);
+
+    //redirection with hook navigate
   }
 
   return (
@@ -67,16 +84,16 @@ const SignUp = () => {
       </FormControl>
 
       <Avatar 
-        src={ avatarUrl }
+        src={ avatar }
         name={ firstName === '' || lastName === '' ? null :  `${firstName} ${lastName}` }
       />
 
       <Input
         id='avatar'
         type='file'
-        onChange={ (e) => setAvatarUrl(URL.createObjectURL(e.target.files[0])) }
+        onChange={ (e) => setAvatar(URL.createObjectURL(e.target.files[0])) }
       />
-      <Button variant='outline'>Create Account</Button>
+      <Button variant='outline' type='submit' >Create Account</Button>
     </form>
   )
 }
