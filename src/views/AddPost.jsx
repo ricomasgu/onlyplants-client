@@ -47,9 +47,9 @@ const AddPost = () => {
 		<div>
 			<Navbar />
 			<div>
-				<Container w="100%" h="100%" mt="auto">
+				<Container w="100%" h="100%" mt="50px">
 					<form onSubmit={handleSubmit}>
-						<Flex justify="center" align="center">
+						<Flex justify="center" align="center" mb="25px">
 							<Flex direction="column" maxHeight="60vh">
 								<Center p="4" h="60vh" w="40vh">
 									<Wrap>
@@ -62,7 +62,6 @@ const AddPost = () => {
 												onChange={handleImageUpload}
 												name="image"
 												size="sm"
-												mt="85px"
 												borderRadius="10"
 											/>
 										</WrapItem>
