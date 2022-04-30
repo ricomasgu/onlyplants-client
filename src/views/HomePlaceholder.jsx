@@ -1,11 +1,11 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
 
-const HomePlaceholder = () => {
+const HomePlaceholder = ( props ) => {
 	return (
 		<div>
 			<></>
-			<Navbar />
+			<Navbar { ...props } />
 		</div>
 	);
 };
