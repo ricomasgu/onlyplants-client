@@ -26,7 +26,8 @@ const SignUp = () => {
       password,
       avatar
     },
-    { 
+    {
+      headers: { "Content-Type": "multipart/form-data" },
       withCredentials: true
     })
 
@@ -84,14 +85,14 @@ const SignUp = () => {
       </FormControl>
 
       <Avatar 
-        src={ avatar }
+        src={ avatar !== '' ? URL.createObjectURL( avatar ) : null }
         name={ firstName === '' || lastName === '' ? null :  `${firstName} ${lastName}` }
       />
 
       <Input
         id='avatar'
         type='file'
-        onChange={ (e) => setAvatar(URL.createObjectURL(e.target.files[0])) }
+        onChange={ (e) => setAvatar(e.target.files[0]) }
       />
       <Button variant='outline' type='submit' >Create Account</Button>
     </form>
