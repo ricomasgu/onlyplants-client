@@ -1,40 +1,35 @@
-import React from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 import { 
   FormControl, 
   Input,
   Avatar,
   Button
 } from '@chakra-ui/react';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
-const SignUp = ( props ) => {
-  const {
-    firstName: [firstName, setFirstName],
-    lastName: [lastName, setLastName],
-    email: [email, setEmail],
-    username: [username, setUsername],
-    password: [password, setPassword],
-    avatar: [avatar, setAvatar]
-  } = props;
+import service from '../services/service';
+
+const SignUp = ( ) => {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [avatar, setAvatar] = useState('');
 
   const navigate = useNavigate();
 
   const onSubmit = async ( event ) => {
     event.preventDefault();
 
-    const resFromApi = await axios.post('http://localhost:5005/api/auth/signup', {
+    const resFromApi = await service.signup({
       firstName,
       lastName,
       email,
       username,
       password,
       avatar
-    },
-    {
-      headers: { "Content-Type": "multipart/form-data" },
-      withCredentials: true
-    })
+    });
 
     console.log(resFromApi);
 
@@ -104,8 +99,12 @@ const SignUp = ( props ) => {
       <Button variant='outline' type='submit' >
         Create Account
       </Button>
+
+      <NavLink to='/login' >
+        Already have an account?
+      </NavLink>
     </form>
-  )
+  );
 }
 
 export default SignUp
