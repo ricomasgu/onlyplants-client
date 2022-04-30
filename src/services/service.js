@@ -25,6 +25,15 @@ class Service {
       }
     );
   }
+
+  loggedIn() {
+    return axios.get(
+      `${ this.baseURL }/auth/loggedIn`,
+      {
+        withCredentials: true
+      }
+    );
+  }
 }
 
 const service = new Service();
