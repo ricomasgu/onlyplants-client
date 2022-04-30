@@ -41,7 +41,7 @@ const Navbar = () => {
 							<Avatar src="" size="sm" />
 							<Wrap>
 								<Center gap="4">
-									<Link to="/post">Profile</Link>
+									<Link to="/profile">Profile</Link>
 									<Button onClick={handleLogout} size="sm">
 										Logout
 									</Button>
