@@ -1,19 +1,24 @@
-import React, { useState } from 'react'
-import axios from 'axios'
+import React from 'react';
+import axios from 'axios';
 import { 
   FormControl, 
   Input,
   Avatar,
   Button
-} from '@chakra-ui/react'
+} from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
 
-const SignUp = () => {
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
-  const [email, setEmail] = useState('')
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [avatar, setAvatar] = useState('')
+const SignUp = ( props ) => {
+  const {
+    firstName: [firstName, setFirstName],
+    lastName: [lastName, setLastName],
+    email: [email, setEmail],
+    username: [username, setUsername],
+    password: [password, setPassword],
+    avatar: [avatar, setAvatar]
+  } = props;
+
+  const navigate = useNavigate();
 
   const onSubmit = async ( event ) => {
     event.preventDefault();
@@ -34,6 +39,7 @@ const SignUp = () => {
     console.log(resFromApi);
 
     //redirection with hook navigate
+    navigate('/');
   }
 
   return (
@@ -85,7 +91,7 @@ const SignUp = () => {
       </FormControl>
 
       <Avatar 
-        src={ avatar !== '' ? URL.createObjectURL( avatar ) : null }
+        src={ avatar !== '' ? URL.createObjectURL( avatar ) : avatar }
         name={ firstName === '' || lastName === '' ? null :  `${firstName} ${lastName}` }
       />
 
@@ -94,7 +100,10 @@ const SignUp = () => {
         type='file'
         onChange={ (e) => setAvatar(e.target.files[0]) }
       />
-      <Button variant='outline' type='submit' >Create Account</Button>
+
+      <Button variant='outline' type='submit' >
+        Create Account
+      </Button>
     </form>
   )
 }

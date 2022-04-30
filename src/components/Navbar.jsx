@@ -12,7 +12,13 @@ import {
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
-const Navbar = () => {
+const Navbar = ( props ) => {
+	const {
+		firstName: [ firstName, ],
+		lastName: [ lastName, ],
+		avatar: [ avatar, ],
+	} = props;
+
 	const handleLogout = () => {
 		console.log('Clicked');
 	};
@@ -38,7 +44,11 @@ const Navbar = () => {
 					<Spacer />
 					<Wrap>
 						<Center gap="2">
-							<Avatar src="" size="sm" />
+							<Avatar 
+								src={ avatar !== '' ? URL.createObjectURL( avatar ) : avatar }
+        				name={ firstName === '' || lastName === '' ? null :  `${firstName} ${lastName}` } 
+								size="sm"
+							/>
 							<Wrap>
 								<Center gap="4">
 									<Link to="/profile">Profile</Link>
