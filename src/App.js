@@ -6,6 +6,7 @@ import AddPost from './views/AddPost';
 import PostDetail from './views/PostDetail';
 import HomePlaceholder from './views/HomePlaceholder';
 import Login from './components/Login';
+import Feed from './views/Feed';
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
 				<Route path="/" element={<HomePlaceholder />} />
 				<Route path="/signup" element={<SignUp />} />
 				<Route path="/login" element={<Login />} />
+				<Route path="/feed" element={<Feed />} />
 				<Route path="/post" element={<AddPost />} />
 				<Route path="/post/postdetail" element={<PostDetail />} />
 			</Routes>
