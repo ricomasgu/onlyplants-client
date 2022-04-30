@@ -16,6 +16,7 @@ const Navbar = ( props ) => {
 	const {
 		firstName: [ firstName, ],
 		lastName: [ lastName, ],
+		username: [ username, ],
 		avatar: [ avatar, ],
 	} = props;
 
@@ -51,7 +52,7 @@ const Navbar = ( props ) => {
 							/>
 							<Wrap>
 								<Center gap="4">
-									<Link to="/profile">Profile</Link>
+									<Link to="/profile">{ username }'s Profile</Link>
 									<Button onClick={handleLogout} size="sm">
 										Logout
 									</Button>
