@@ -3,7 +3,7 @@ import React from 'react';
 import Navbar from '../components/Navbar';
 import Post from '../components/Post';
 
-const Feed = () => {
+const Feed = ( props ) => {
 	const post = {
 		picture:
 			'https://media.istockphoto.com/photos/potted-snake-plants-inside-a-beautiful-new-flat-or-apartment-picture-id1268045137?k=20&m=1268045137&s=612x612&w=0&h=vXDA2fYCp1dnUhGM7bCbGxmvjZJtrGomlQtiJVEXdAE=',
@@ -14,7 +14,7 @@ const Feed = () => {
 
 	return (
 		<div>
-			<Navbar />
+			<Navbar { ...props } />
 			<Container>
 				<Post post={post} />
 				<Post post={post} />

@@ -41,7 +41,7 @@ function App() {
 		setUsername(usernameAppState);
 		setPassword(passwordAppState);
 		setAvatar(avatarAppState);
-	}
+	};
 
 	return (
 		<div className="App">

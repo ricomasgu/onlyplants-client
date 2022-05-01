@@ -13,12 +13,12 @@ import {
 import { Link } from 'react-router-dom';
 
 const Navbar = ( props ) => {
-	/* const {
-		firstName: [ firstName, ],
-		lastName: [ lastName, ],
-		username: [ username, ],
-		avatar: [ avatar, ],
-	} = props; */
+	const {
+		firstName: firstName,
+		lastName: lastName,
+		username: username,
+		avatar: avatar,
+	} = props;
 
 	const handleLogout = () => {
 		console.log('Clicked');
@@ -46,12 +46,12 @@ const Navbar = ( props ) => {
 					<Wrap>
 						<Center gap="2">
 							<Avatar 
-								src=""
+								src= { avatar }
 								size="sm"
 							/>
 							<Wrap>
 								<Center gap="4">
-									<Link to="/profile">{/* username */}'s Profile</Link>
+									<Link to="/profile">{ username }'s Profile</Link>
 									<Button onClick={handleLogout} size="sm">
 										Logout
 									</Button>
