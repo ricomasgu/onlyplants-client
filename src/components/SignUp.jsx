@@ -9,7 +9,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 
 import service from '../services/service';
 
-const SignUp = ( ) => {
+const SignUp = ( props ) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -22,19 +22,25 @@ const SignUp = ( ) => {
   const onSubmit = async ( event ) => {
     event.preventDefault();
 
-    const resFromApi = await service.signup({
-      firstName,
-      lastName,
-      email,
-      username,
-      password,
-      avatar
-    });
+    try {
+      const resFromApi = await service.signup({
+        firstName,
+        lastName,
+        email,
+        username,
+        password,
+        avatar
+      });
 
-    console.log(resFromApi);
+      console.log( resFromApi );
 
-    //redirection with hook navigate
-    navigate('/');
+      props.setUserState( resFromApi.data );
+
+      navigate('/feed');
+    }
+    catch (error) {
+      console.log(error);
+    }
   }
 
   return (
