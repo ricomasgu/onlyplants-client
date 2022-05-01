@@ -7,8 +7,7 @@ import {
 import { NavLink, useNavigate } from 'react-router-dom';
 import service from '../services/service';
 
-const Login = () => {
-
+const Login = ( props ) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -17,15 +16,23 @@ const Login = () => {
   const onSubmit = async ( event ) => {
     event.preventDefault();
 
-    const resFromApi = await service.login({
-      username,
-      password
-    })
+    try {
+      const resFromApi = await service.login({
+        username,
+        password
+      });
+  
+      console.log(resFromApi);
+      
+      props.setUserState( resFromApi.data );
+      
+      //redirection with hook navigate
+      navigate('/feed');
+    } 
+    catch ( error ) {
+      console.log( error );
+    }
 
-    console.log(resFromApi);
-
-    //redirection with hook navigate
-    navigate('/');
   }
 
   return (
