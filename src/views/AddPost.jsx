@@ -46,7 +46,8 @@ const AddPost = (props) => {
 			description,
 			loggedUser._id
 		);
-		navigate(`/post/${createdPost._id}`);
+		console.log(createdPost);
+		navigate(`/post/${createdPost.data._id}`);
 		handleCancel();
 	};
 
