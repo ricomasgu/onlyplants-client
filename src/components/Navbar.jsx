@@ -10,7 +10,8 @@ import {
 	Center,
 	Button,
 } from '@chakra-ui/react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import service from '../services/service';
 
 const Navbar = ( props ) => {
 	const {
@@ -20,8 +21,17 @@ const Navbar = ( props ) => {
 		avatar: avatar,
 	} = props;
 
-	const handleLogout = () => {
-		console.log('Clicked');
+	const navigate = useNavigate();
+
+	const handleLogout =  async () => {
+		try {
+			const resFromApi = await service.logout();
+			console.log(resFromApi);
+			navigate('/');
+		} 
+		catch (error) {
+			console.log(error);
+		}
 	};
 	return (
 		<div className="navbar">
