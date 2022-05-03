@@ -34,6 +34,16 @@ class Service {
       }
     );
   }
+
+  logout() {
+    return axios.post(
+      `${ this.baseURL }/auth/logout`,
+      {
+        withCredentials: true
+      }
+    );
+  }
+
 }
 
 const service = new Service();
