@@ -14,6 +14,8 @@ import {
 
 const Post = (props) => {
 	const { post, extended } = props;
+	console.log(post);
+
 	const commentList = post.comments.map((comment) => (
 		<Stack direction="row" align="center" m="5px">
 			<Avatar src="" size="xs" />

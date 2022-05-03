@@ -16,7 +16,7 @@ import Navbar from '../components/Navbar';
 
 const AddPost = (props) => {
 	const navigate = useNavigate();
-	const loggedUser = props;
+	const { _id } = props;
 	const [plantType, setPlantType] = React.useState('');
 	const [description, setDescription] = React.useState('');
 	const [image, setImage] = React.useState('');
@@ -44,16 +44,14 @@ const AddPost = (props) => {
 			image,
 			plantType,
 			description,
-			loggedUser._id
+			_id
 		);
-		console.log(createdPost);
 		navigate(`/post/${createdPost.data._id}`);
 		handleCancel();
 	};
-
 	return (
 		<div>
-			<Navbar />
+			<Navbar {...props} />
 			<div>
 				<Container w="100%" h="100%" mt="50px">
 					<form onSubmit={handleSubmit}>

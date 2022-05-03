@@ -20,6 +20,10 @@ class Service {
 		);
 	};
 
+	getPost = (postId) => {
+		return axios.get(`${this.baseUrl}/post/${postId}`);
+	};
+
 	uploader = (file) => {
 		return axios.post(`${this.baseUrl}/fileUpload`, file, {
 			withCredentials: true,
