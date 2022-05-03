@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
 	Container,
 	Flex,
@@ -10,9 +11,12 @@ import {
 	Image,
 	WrapItem,
 } from '@chakra-ui/react';
+import postService from '../api/postServices';
 import Navbar from '../components/Navbar';
 
-const AddPost = () => {
+const AddPost = (props) => {
+	const navigate = useNavigate();
+	const loggedUser = props;
 	const [plantType, setPlantType] = React.useState('');
 	const [description, setDescription] = React.useState('');
 	const [image, setImage] = React.useState('');
@@ -23,23 +27,27 @@ const AddPost = () => {
 	const handleDescriptionChange = (event) => {
 		setDescription(event.target.value);
 	};
-	const handleImageUpload = (event) => {
+	const handleImageUpload = async (event) => {
 		const uploadData = new FormData();
 		uploadData.append('imageUrl', event.target.files[0]);
-		setImage(URL.createObjectURL(event.target.files[0]));
+		const uploadedImage = await postService.uploader(uploadData);
+		setImage(uploadedImage.data.secure_url);
 	};
 	const handleCancel = () => {
 		setImage('');
 		setPlantType('');
 		setDescription('');
 	};
-	const handleSubmit = (event) => {
+	const handleSubmit = async (event) => {
 		event.preventDefault();
-		console.log({
+		const createdPost = await postService.createPost(
+			image,
 			plantType,
 			description,
-			image,
-		});
+			loggedUser._id
+		);
+		console.log(createdPost);
+		navigate(`/post/${createdPost.data._id}`);
 		handleCancel();
 	};
 
