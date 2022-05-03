@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
 import SignUp from './components/SignUp';
@@ -11,57 +11,27 @@ import service from './services/service';
 import { Spinner } from '@chakra-ui/react';
 
 function App() {
-	const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [avatar, setAvatar] = useState('');
+	const [userState, setUserState] = useState('');
 	const [loggedIn, setLoggedIn] = useState(false);
 	const [loading, setLoading] = useState(true);
-
-	const userAppState = {
-		firstName,
-		lastName,
-		email,
-		username,
-		password,
-		avatar
-	}
-
-	const setUserState = ( userState ) => {
-		const {
-			firstName: firstNameAppState,
-			lastName: lastNameAppState,
-			email: emailAppState,
-			username: usernameAppState,
-			password: passwordAppState,
-			avatar: avatarAppState
-		} = userState;
-
-		setFirstName(firstNameAppState);
-		setLastName(lastNameAppState);
-		setEmail(emailAppState);
-		setUsername(usernameAppState);
-		setPassword(passwordAppState);
-		setAvatar(avatarAppState);
-		setLoggedIn(true);
-	};
 
 	const userLoggedIn = async () => {
 		try {
 			const resFromApi = await service.loggedIn();
-			if (resFromApi.data !== '' ) {
-				console.log(resFromApi.data);
-				setUserState( resFromApi.data );
-			}
 			setLoading(false);
+			console.log( resFromApi.data );
+			setUserState( resFromApi.data );
+			if (typeof resFromApi.data === 'object' ) {
+				setLoggedIn( true );
+			}
 		} catch (error) {
 			console.log(error);
 		}
 	}
 	
-	userLoggedIn();
+	useEffect( () => {
+		userLoggedIn();
+	}, []);
 
 	return (
 		<div className="App">
@@ -91,7 +61,7 @@ function App() {
 						element=
 						{ 
 							!loggedIn ? 
-							<SignUp setUserState={ setUserState } /> 
+							<SignUp setUserState={ setUserState } setLoggedIn={ setLoggedIn } /> 
 							: 
 							<Navigate to="/feed" /> 
 						}
@@ -101,7 +71,7 @@ function App() {
 						element=
 						{ 
 							!loggedIn ? 
-							<Login setUserState={ setUserState } /> 
+							<Login setUserState={ setUserState } setLoggedIn={ setLoggedIn } /> 
 							: 
 							<Navigate to="/feed" /> 
 						}
@@ -111,7 +81,7 @@ function App() {
 						element=
 						{ 
 							loggedIn ? 
-							<Feed { ...userAppState } /> 
+							<Feed { ...userState } /> 
 							: 
 							<Navigate to="/signup" /> 
 						} 

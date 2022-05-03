@@ -25,8 +25,8 @@ const Login = ( props ) => {
       console.log(resFromApi);
       
       props.setUserState( resFromApi.data );
-      
-      //redirection with hook navigate
+      props.setLoggedIn( true );
+
       navigate('/feed');
     } 
     catch ( error ) {

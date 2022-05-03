@@ -35,6 +35,7 @@ const SignUp = ( props ) => {
       console.log( resFromApi );
 
       props.setUserState( resFromApi.data );
+      props.setLoggedIn( true );
 
       navigate('/feed');
     }
