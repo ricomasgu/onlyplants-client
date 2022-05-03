@@ -10,11 +10,11 @@ import Feed from './views/Feed';
 
 function App() {
 	const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [avatar, setAvatar] = useState('');
+	const [lastName, setLastName] = useState('');
+	const [email, setEmail] = useState('');
+	const [username, setUsername] = useState('');
+	const [password, setPassword] = useState('');
+	const [avatar, setAvatar] = useState('');
 
 	const userAppState = {
 		firstName,
@@ -22,17 +22,17 @@ function App() {
 		email,
 		username,
 		password,
-		avatar
-	}
+		avatar,
+	};
 
-	const setUserState = ( userState ) => {
+	const setUserState = (userState) => {
 		const {
 			firstName: firstNameAppState,
 			lastName: lastNameAppState,
 			email: emailAppState,
 			username: usernameAppState,
 			password: passwordAppState,
-			avatar: avatarAppState
+			avatar: avatarAppState,
 		} = userState;
 
 		setFirstName(firstNameAppState);
@@ -46,11 +46,14 @@ function App() {
 	return (
 		<div className="App">
 			<Routes>
-				<Route path="/" element={<HomePlaceholder  />} />
-				<Route path="/signup" element={<SignUp setUserState={ setUserState } />} />
-				<Route path="/login" element={<Login setUserState={ setUserState } />} />
-				<Route path="/feed" element={<Feed { ...userAppState } />} />
-				<Route path="/post" element={<AddPost />} />
+				<Route path="/" element={<HomePlaceholder />} />
+				<Route
+					path="/signup"
+					element={<SignUp setUserState={setUserState} />}
+				/>
+				<Route path="/login" element={<Login setUserState={setUserState} />} />
+				<Route path="/feed" element={<Feed {...userAppState} />} />
+				<Route path="/post" element={<AddPost {...userAppState} />} />
 				<Route path="/post/postdetail" element={<PostDetail />} />
 			</Routes>
 		</div>
