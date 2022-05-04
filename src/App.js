@@ -19,95 +19,81 @@ function App() {
 		try {
 			const resFromApi = await service.loggedIn();
 			setLoading(false);
-			console.log( resFromApi.data );
-			setUserState( resFromApi.data );
-			if (typeof resFromApi.data === 'object' ) {
-				setLoggedIn( true );
+			setUserState(resFromApi.data);
+			if (typeof resFromApi.data === 'object') {
+				setLoggedIn(true);
 			}
 		} catch (error) {
 			console.log(error);
 		}
-	}
-	
-	useEffect( () => {
+	};
+
+	useEffect(() => {
 		userLoggedIn();
 	}, []);
 
 	return (
 		<div className="App">
-			{	
-				loading ? 
+			{loading ? (
 				<Spinner
-					thickness='4px'
-					speed='0.65s'
-					emptyColor='gray.200'
-					color='red.500'
-					size='xl'
+					thickness="4px"
+					speed="0.65s"
+					emptyColor="gray.200"
+					color="red.500"
+					size="xl"
 				/>
-					:
+			) : (
 				<Routes>
 					<Route
 						path="/"
-						element=
-						{
-							loggedIn ? 
-							<Navigate	to="/feed" /> 
-							: 
-							<Navigate to="/signup" /> 
+						element={
+							loggedIn ? <Navigate to="/feed" /> : <Navigate to="/signup" />
 						}
 					/>
-					<Route 
+					<Route
 						path="/signup"
-						element=
-						{ 
-							!loggedIn ? 
-							<SignUp setUserState={ setUserState } setLoggedIn={ setLoggedIn } /> 
-							: 
-							<Navigate to="/feed" /> 
+						element={
+							!loggedIn ? (
+								<SignUp setUserState={setUserState} setLoggedIn={setLoggedIn} />
+							) : (
+								<Navigate to="/feed" />
+							)
 						}
 					/>
-					<Route 
-						path="/login" 
-						element=
-						{ 
-							!loggedIn ? 
-							<Login setUserState={ setUserState } setLoggedIn={ setLoggedIn } /> 
-							: 
-							<Navigate to="/feed" /> 
+					<Route
+						path="/login"
+						element={
+							!loggedIn ? (
+								<Login setUserState={setUserState} setLoggedIn={setLoggedIn} />
+							) : (
+								<Navigate to="/feed" />
+							)
 						}
 					/>
-					<Route 
-						path="/feed" 
-						element=
-						{ 
-							loggedIn ? 
-							<Feed { ...userState } /> 
-							: 
-							<Navigate to="/signup" /> 
-						} 
+					<Route
+						path="/feed"
+						element={
+							loggedIn ? <Feed {...userState} /> : <Navigate to="/signup" />
+						}
 					/>
-					<Route 
-						path="/post" 
-						element=
-						{
-							loggedIn ? 
-							<AddPost /> 
-							: 
-							<Navigate to="/signup" />
-						} 
+					<Route
+						path="/post"
+						element={
+							loggedIn ? <AddPost {...userState} /> : <Navigate to="/signup" />
+						}
 					/>
-					<Route 
-						path="/post/postdetail" 
-						element=
-						{ 
-							loggedIn ? 
-							<PostDetail /> 
-							: 
-							<Navigate to="/signup" /> 
-						} 
+					<Route
+						path="/post/:postdetail"
+						element={
+							loggedIn ? (
+								<PostDetail {...userState} />
+							) : (
+								<Navigate to="/signup" />
+							)
+						}
 					/>
 				</Routes>
-			}
+			)}
 		</div>
 	);
 }
