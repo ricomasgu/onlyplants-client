@@ -24,6 +24,44 @@ class Service {
 		return axios.get(`${this.baseUrl}/post/${postId}`);
 	};
 
+	deletePost = (postId) => {
+		return axios.delete(`${this.baseUrl}/post/${postId}`);
+	};
+
+	addComment = (comment, owner, post) => {
+		return axios.post(
+			`${this.baseUrl}/comment`,
+			{ comment, owner, post },
+			{
+				withCredentials: true,
+			}
+		);
+	};
+
+	deleteComment = (commentId, postId) => {
+		return axios.post(`${this.baseUrl}/comment/delete`, { commentId, postId });
+	};
+
+	likePost = (postId, userId) => {
+		return axios.post(
+			`${this.baseUrl}/post/like`,
+			{ postId, userId },
+			{
+				withCredentials: true,
+			}
+		);
+	};
+
+	dislikePost = (postId, userId) => {
+		return axios.post(
+			`${this.baseUrl}/post/dislike`,
+			{ postId, userId },
+			{
+				withCredentials: true,
+			}
+		);
+	};
+
 	uploader = (file) => {
 		return axios.post(`${this.baseUrl}/fileUpload`, file, {
 			withCredentials: true,

@@ -11,21 +11,74 @@ import {
 	Button,
 	Stack,
 } from '@chakra-ui/react';
+import { Link, useNavigate } from 'react-router-dom';
+
+import postService from '../api/postServices';
 
 const Post = (props) => {
-	const { post, extended } = props;
-	console.log(post);
+	const { post, extended, isAdmin, _id, reload, setReload } = props;
+	const navigate = useNavigate();
+	const [liked, setLiked] = React.useState(false);
+
+	React.useEffect(() => {
+		if (post.likes.includes(_id)) {
+			setLiked(true);
+		} else {
+			setLiked(false);
+		}
+	}, [post.likes, _id, liked, reload]);
+
+	const handleDeleteComment = async (event) => {
+		const commentId = event.target.id;
+		const deletedComment = await postService.deleteComment(commentId, post._id);
+		if (deletedComment.status === 200) {
+			setReload(!reload);
+		}
+	};
 
 	const commentList = post.comments.map((comment) => (
-		<Stack direction="row" align="center" m="5px">
-			<Avatar src="" size="xs" />
-			<Text fontSize="xs" fontWeight="bold">
-				Username
-			</Text>
-			<Text fontSize="xs">{comment}</Text>
-		</Stack>
+		<div key={comment._id}>
+			<Stack direction="row" align="center" m="5px">
+				<Avatar src={comment.owner.avatar} size="xs" />
+				<Text fontSize="xs" fontWeight="bold">
+					{comment.owner.username}
+				</Text>
+
+				<Text fontSize="xs">{comment.comment}</Text>
+				<Spacer />
+				{comment.owner._id === _id && (
+					<Button
+						size="xs"
+						fontSize="12px"
+						colorScheme="red"
+						borderRadius="25px"
+						id={comment._id}
+						onClick={handleDeleteComment}
+					>
+						X
+					</Button>
+				)}
+			</Stack>
+		</div>
 	));
-	const handleLike = () => {};
+	const handleLike = async () => {
+		const likedPost = await postService.likePost(post._id, _id);
+		if (likedPost.status === 200) {
+			setReload(!reload);
+		}
+	};
+	const handleDislike = async () => {
+		const dislikedPost = await postService.dislikePost(post._id, _id);
+		if (dislikedPost.status === 200) {
+			setReload(!reload);
+		}
+	};
+	const handleDelete = async () => {
+		const deletedPost = await postService.deletePost(post._id);
+		if (deletedPost) {
+			navigate('/feed');
+		}
+	};
 	return (
 		<div>
 			<Container
@@ -36,21 +89,48 @@ const Post = (props) => {
 				pb="25px"
 				boxShadow="xl"
 			>
+				{isAdmin && (
+					<Flex justify="right" gap="2">
+						<Button
+							colorScheme="red"
+							size="sm"
+							borderRadius="100%"
+							onClick={handleDelete}
+						>
+							X
+						</Button>
+					</Flex>
+				)}
 				<Container h="400px">
 					<Center>
-						<Image src={post.picture} />
+						<Image src={post.imageUrl} maxH="400px" maxW="400px" />
 					</Center>
 				</Container>
 				<Container>
-					<Flex align="center" gap="2">
-						<Avatar src="" size="sm" />
-						<Text>Username</Text>
+					<Flex align="center" gap="2" pt="25px">
+						<Link to={`/user/${post.creator._id}`}>
+							<Center gap="2">
+								<Avatar src={post.creator.avatar} size="sm" />
+								<Text>{post.creator.username}</Text>
+							</Center>
+						</Link>
 						<Spacer />
-						<Text>Plant Type</Text>
+						<Text>{post.plantType}</Text>
 						<Spacer />
-						<Button variant="outline" colorScheme="green" onClick={handleLike}>
-							<Center>10 Likes 💚</Center>
-						</Button>
+						{!liked && (
+							<Button
+								variant="outline"
+								colorScheme="green"
+								onClick={handleLike}
+							>
+								<Center>{post.likes.length} Likes 💚</Center>
+							</Button>
+						)}
+						{liked && (
+							<Button colorScheme="green" onClick={handleDislike}>
+								<Center>{post.likes.length} Likes 💚</Center>
+							</Button>
+						)}
 					</Flex>
 				</Container>
 				{extended && (

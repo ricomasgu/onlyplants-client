@@ -8,18 +8,23 @@ import Navbar from '../components/Navbar';
 import Post from '../components/Post';
 
 const PostDetail = (props) => {
-	const postId = useParams();
+	const { _id } = props;
+	const { postdetail } = useParams();
 	const [post, setPost] = React.useState({});
 	const [comment, setComment] = React.useState('');
+	const [isAdmin, setIsAdmin] = React.useState(false);
+	const [reload, setReload] = React.useState(false);
 
 	React.useEffect(() => {
 		async function fetch(postId) {
 			const wantedPost = await postService.getPost(postId);
 			setPost(wantedPost.data);
-			console.log(post);
+			if (_id === wantedPost.data.creator._id) {
+				setIsAdmin(true);
+			}
 		}
-		fetch(postId);
-	}, [postId, post]);
+		fetch(postdetail);
+	}, [postdetail, _id, reload]);
 
 	const handleCommentChange = (event) => {
 		setComment(event.target.value);
@@ -30,15 +35,35 @@ const PostDetail = (props) => {
 		setComment('');
 	};
 
-	const handleCommentSubmit = (event) => {
+	const handleCommentSubmit = async (event) => {
 		event.preventDefault();
+		const createdComment = await postService.addComment(
+			comment,
+			_id,
+			postdetail
+		);
+		if (createdComment) {
+			setReload(!reload);
+			setComment('');
+		}
 	};
 
 	return (
 		<div>
 			<Navbar {...props} />
 			<div>
-				<div>{post && <Post post={post} extended />}</div>
+				<div>
+					{post._id && (
+						<Post
+							post={post}
+							extended
+							isAdmin={isAdmin}
+							setReload={setReload}
+							reload={reload}
+							{...props}
+						/>
+					)}
+				</div>
 				<div>
 					<Container mt="25px" mb="25px">
 						<form onSubmit={handleCommentSubmit}>

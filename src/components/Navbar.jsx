@@ -21,8 +21,9 @@ const Navbar = (props) => {
 	const handleLogout = async () => {
 		try {
 			const resFromApi = await service.logout();
-			console.log(resFromApi);
-			navigate('/');
+			if (resFromApi) {
+				navigate('/');
+			}
 		} catch (error) {
 			console.log(error);
 		}
@@ -52,7 +53,7 @@ const Navbar = (props) => {
 							<Avatar src={avatar} size="sm" />
 							<Wrap>
 								<Center gap="4">
-									<Link to="/profile">{username}'s Profile</Link>
+									<Link to="/profile">{username}</Link>
 									<Button onClick={handleLogout} size="sm">
 										Logout
 									</Button>

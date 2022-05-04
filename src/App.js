@@ -19,7 +19,6 @@ function App() {
 		try {
 			const resFromApi = await service.loggedIn();
 			setLoading(false);
-			console.log(resFromApi.data);
 			setUserState(resFromApi.data);
 			if (typeof resFromApi.data === 'object') {
 				setLoggedIn(true);
