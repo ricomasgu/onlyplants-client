@@ -4,7 +4,7 @@ import { Button, Center, Container, Textarea } from '@chakra-ui/react';
 import postService from '../api/postServices';
 
 const Comment = (props) => {
-	const { _id, postdetail } = props;
+	const { _id, post, setPost } = props;
 	const [comment, setComment] = React.useState('');
 
 	const handleCommentChange = (event) => {
@@ -18,13 +18,10 @@ const Comment = (props) => {
 
 	const handleCommentSubmit = async (event) => {
 		event.preventDefault();
-		const createdComment = await postService.addComment(
-			comment,
-			_id,
-			postdetail
-		);
-		if (createdComment) {
+		const createdComment = await postService.addComment(comment, _id, post._id);
+		if (createdComment.status === 200) {
 			setComment('');
+			setPost({ ...post, commented: true });
 		}
 	};
 	return (

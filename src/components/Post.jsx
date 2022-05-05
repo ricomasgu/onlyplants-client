@@ -35,7 +35,7 @@ const Post = (props) => {
 		const commentId = event.target.id;
 		const deletedComment = await postService.deleteComment(commentId, post._id);
 		if (deletedComment.status === 200) {
-			setPost({ ...post, deletedComment: true });
+			setPost({ ...post, commented: true });
 		}
 	};
 
