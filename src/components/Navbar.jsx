@@ -10,17 +10,23 @@ import {
 	Center,
 	Button,
 } from '@chakra-ui/react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import service from '../services/service';
 
-const Navbar = ( props ) => {
-	const {
-		firstName: [ firstName, ],
-		lastName: [ lastName, ],
-		avatar: [ avatar, ],
-	} = props;
+const Navbar = (props) => {
+	const { username, avatar } = props;
 
-	const handleLogout = () => {
-		console.log('Clicked');
+	const navigate = useNavigate();
+
+	const handleLogout = async () => {
+		try {
+			const resFromApi = await service.logout();
+			if (resFromApi) {
+				navigate('/');
+			}
+		} catch (error) {
+			console.log(error);
+		}
 	};
 	return (
 		<div className="navbar">
@@ -44,14 +50,10 @@ const Navbar = ( props ) => {
 					<Spacer />
 					<Wrap>
 						<Center gap="2">
-							<Avatar 
-								src={ avatar !== '' ? URL.createObjectURL( avatar ) : avatar }
-        				name={ firstName === '' || lastName === '' ? null :  `${firstName} ${lastName}` } 
-								size="sm"
-							/>
+							<Avatar src={avatar} size="sm" />
 							<Wrap>
 								<Center gap="4">
-									<Link to="/profile">Profile</Link>
+									<Link to="/profile">{username}</Link>
 									<Button onClick={handleLogout} size="sm">
 										Logout
 									</Button>

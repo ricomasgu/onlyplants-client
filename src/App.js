@@ -1,38 +1,99 @@
-import React, { useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
 
 import SignUp from './components/SignUp';
 import AddPost from './views/AddPost';
 import PostDetail from './views/PostDetail';
-import HomePlaceholder from './views/HomePlaceholder';
+import Login from './components/Login';
 import Feed from './views/Feed';
 
-function App() {
-	const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [avatar, setAvatar] = useState('');
+import service from './services/service';
+import { Spinner } from '@chakra-ui/react';
 
-	const userInfo = {
-		firstName: [firstName, setFirstName],
-		lastName: [lastName, setLastName],
-		email: [email, setEmail],
-		username: [username, setUsername],
-		password: [password, setPassword],
-		avatar: [avatar, setAvatar]
-	}
+function App() {
+	const [userState, setUserState] = useState('');
+	const [loggedIn, setLoggedIn] = useState(false);
+	const [loading, setLoading] = useState(true);
+
+	const userLoggedIn = async () => {
+		try {
+			const resFromApi = await service.loggedIn();
+			setLoading(false);
+			setUserState(resFromApi.data);
+			if (typeof resFromApi.data === 'object') {
+				setLoggedIn(true);
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	useEffect(() => {
+		userLoggedIn();
+	}, []);
 
 	return (
 		<div className="App">
-			<Routes>
-				<Route path="/" element={<HomePlaceholder { ...userInfo } />} />
-				<Route path="/signup" element={<SignUp { ...userInfo } />} />
-				<Route path="/feed" element={<Feed />} />
-				<Route path="/post" element={<AddPost />} />
-				<Route path="/post/postdetail" element={<PostDetail />} />
-			</Routes>
+			{loading ? (
+				<Spinner
+					thickness="4px"
+					speed="0.65s"
+					emptyColor="gray.200"
+					color="red.500"
+					size="xl"
+				/>
+			) : (
+				<Routes>
+					<Route
+						path="/"
+						element={
+							loggedIn ? <Navigate to="/feed" /> : <Navigate to="/signup" />
+						}
+					/>
+					<Route
+						path="/signup"
+						element={
+							!loggedIn ? (
+								<SignUp setUserState={setUserState} setLoggedIn={setLoggedIn} />
+							) : (
+								<Navigate to="/feed" />
+							)
+						}
+					/>
+					<Route
+						path="/login"
+						element={
+							!loggedIn ? (
+								<Login setUserState={setUserState} setLoggedIn={setLoggedIn} />
+							) : (
+								<Navigate to="/feed" />
+							)
+						}
+					/>
+					<Route
+						path="/feed"
+						element={
+							loggedIn ? <Feed {...userState} /> : <Navigate to="/signup" />
+						}
+					/>
+					<Route
+						path="/post"
+						element={
+							loggedIn ? <AddPost {...userState} /> : <Navigate to="/signup" />
+						}
+					/>
+					<Route
+						path="/post/:postdetail"
+						element={
+							loggedIn ? (
+								<PostDetail {...userState} />
+							) : (
+								<Navigate to="/signup" />
+							)
+						}
+					/>
+				</Routes>
+			)}
 		</div>
 	);
 }
