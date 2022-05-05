@@ -1,5 +1,4 @@
 import React from 'react';
-
 import {
 	Center,
 	Container,
@@ -12,12 +11,12 @@ import {
 	Stack,
 } from '@chakra-ui/react';
 import { Link, useNavigate } from 'react-router-dom';
-
 import postService from '../api/postServices';
 
 const Post = (props) => {
-	const { post, extended, isAdmin, _id, reload, setReload } = props;
+	const { post, setPost, extended, _id, feed } = props;
 	const navigate = useNavigate();
+	const [isAdmin, setIsAdmin] = React.useState(false);
 	const [liked, setLiked] = React.useState(false);
 
 	React.useEffect(() => {
@@ -26,13 +25,38 @@ const Post = (props) => {
 		} else {
 			setLiked(false);
 		}
-	}, [post.likes, _id, liked, reload]);
+
+		if (_id === post.creator._id && !feed) {
+			setIsAdmin(true);
+		}
+	}, [post, _id, liked, feed]);
 
 	const handleDeleteComment = async (event) => {
 		const commentId = event.target.id;
 		const deletedComment = await postService.deleteComment(commentId, post._id);
 		if (deletedComment.status === 200) {
-			setReload(!reload);
+			setPost({ ...post, deletedComment: true });
+		}
+	};
+
+	const handleLike = async () => {
+		const likedPost = await postService.likePost(post._id, _id);
+		if (likedPost.status === 200) {
+			setPost({ ...post, liked: true });
+		}
+	};
+
+	const handleDislike = async () => {
+		const dislikedPost = await postService.dislikePost(post._id, _id);
+		if (dislikedPost.status === 200) {
+			setPost({ ...post, liked: false });
+		}
+	};
+
+	const handleDelete = async () => {
+		const deletedPost = await postService.deletePost(post._id);
+		if (deletedPost) {
+			navigate('/feed');
 		}
 	};
 
@@ -61,24 +85,6 @@ const Post = (props) => {
 			</Stack>
 		</div>
 	));
-	const handleLike = async () => {
-		const likedPost = await postService.likePost(post._id, _id);
-		if (likedPost.status === 200) {
-			setReload(!reload);
-		}
-	};
-	const handleDislike = async () => {
-		const dislikedPost = await postService.dislikePost(post._id, _id);
-		if (dislikedPost.status === 200) {
-			setReload(!reload);
-		}
-	};
-	const handleDelete = async () => {
-		const deletedPost = await postService.deletePost(post._id);
-		if (deletedPost) {
-			navigate('/feed');
-		}
-	};
 	return (
 		<div>
 			<Container
