@@ -21,7 +21,7 @@ const Navbar = (props) => {
 	const handleLogout = async () => {
 		try {
 			const resFromApi = await service.logout();
-			if (resFromApi) {
+			if (resFromApi.status === 200) {
 				navigate('/');
 			}
 		} catch (error) {

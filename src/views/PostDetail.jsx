@@ -8,7 +8,6 @@ import Post from '../components/Post';
 import Comment from '../components/Comment';
 
 const PostDetail = (props) => {
-	const { _id } = props;
 	const { postdetail } = useParams();
 	const [post, setPost] = React.useState({});
 
@@ -18,7 +17,7 @@ const PostDetail = (props) => {
 			setPost(wantedPost.data);
 		}
 		fetch(postdetail);
-	}, [postdetail, _id, post]);
+	}, [postdetail, post.liked, post.commented]);
 
 	return (
 		<div>
@@ -27,7 +26,7 @@ const PostDetail = (props) => {
 				{post._id && (
 					<div>
 						<Post post={post} setPost={setPost} extended {...props} />
-						<Comment postdetail={postdetail} {...props} />
+						<Comment post={post} setPost={setPost} {...props} />
 					</div>
 				)}
 			</div>
