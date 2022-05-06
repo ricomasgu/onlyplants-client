@@ -13,17 +13,12 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import service from '../services/service';
 
-const Navbar = ( props ) => {
-	const {
-		firstName: firstName,
-		lastName: lastName,
-		username: username,
-		avatar: avatar,
-	} = props;
+const Navbar = (props) => {
+	const { username, avatar } = props;
 
 	const navigate = useNavigate();
 
-	const handleLogout =  async () => {
+	const handleLogout = async () => {
 		try {
 			const resFromApi = await service.logout();
 
@@ -58,13 +53,10 @@ const Navbar = ( props ) => {
 					<Spacer />
 					<Wrap>
 						<Center gap="2">
-							<Avatar 
-								src= { avatar }
-								size="sm"
-							/>
+							<Avatar src={avatar} size="sm" />
 							<Wrap>
 								<Center gap="4">
-									<Link to="/profile">{ username }'s Profile</Link>
+									<Link to="/profile">{username}</Link>
 									<Button onClick={handleLogout} size="sm">
 										Logout
 									</Button>
