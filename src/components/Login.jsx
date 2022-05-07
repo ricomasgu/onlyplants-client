@@ -26,8 +26,6 @@ const Login = ( props ) => {
         username,
         password
       });
-  
-      console.log(resFromApi);
       
       props.setUserState( resFromApi.data );
       props.setLoggedIn( true );

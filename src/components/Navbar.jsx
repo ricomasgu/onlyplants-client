@@ -20,7 +20,7 @@ const Navbar = (props) => {
 
 	const handleLogout = async () => {
 		try {
-			const resFromApi = await service.logout();
+			await service.logout();
 
 			props.setUserState('');
 			props.setLoggedIn(false);

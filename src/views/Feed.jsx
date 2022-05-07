@@ -1,7 +1,6 @@
 import { Container, Button, Center } from '@chakra-ui/react';
 import React from 'react';
 import postService from '../api/postServices';
-import Navbar from '../components/Navbar';
 import Post from '../components/Post';
 
 const Feed = (props) => {
@@ -35,7 +34,6 @@ const Feed = (props) => {
 
 	return (
 		<div>
-			<Navbar {...userState} />
 			<Container>{feedArray}</Container>
 			<Container mt="50px" mb="50px">
 				<Center>
