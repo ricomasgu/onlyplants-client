@@ -21,10 +21,13 @@ const Navbar = (props) => {
 	const handleLogout = async () => {
 		try {
 			const resFromApi = await service.logout();
-			if (resFromApi.status === 200) {
-				navigate('/');
-			}
-		} catch (error) {
+
+			props.setUserState('');
+			props.setLoggedIn(false);
+			
+			navigate('/');
+		} 
+		catch (error) {
 			console.log(error);
 		}
 	};

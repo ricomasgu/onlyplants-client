@@ -16,9 +16,9 @@ function App() {
 	const [loading, setLoading] = useState(true);
 
 	const userLoggedIn = async () => {
+		setLoading(false);
 		try {
 			const resFromApi = await service.loggedIn();
-			setLoading(false);
 			setUserState(resFromApi.data);
 			if (typeof resFromApi.data === 'object') {
 				setLoggedIn(true);
@@ -45,7 +45,7 @@ function App() {
 			) : (
 				<Routes>
 					<Route
-						path="/"
+						index
 						element={
 							loggedIn ? <Navigate to="/feed" /> : <Navigate to="/signup" />
 						}
@@ -83,10 +83,10 @@ function App() {
 						}
 					/>
 					<Route
-						path="/post/:postdetail"
+						path="/post/:postId"
 						element={
 							loggedIn ? (
-								<PostDetail {...userState} />
+								<PostDetail userState={userState} />
 							) : (
 								<Navigate to="/signup" />
 							)
