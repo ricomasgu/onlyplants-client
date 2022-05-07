@@ -2,7 +2,12 @@ import React, { useState } from 'react';
 import { 
   FormControl, 
   Input,
-  Button
+  Button,
+  Container,
+  Center,
+  Box,
+  Text,
+  VStack
 } from '@chakra-ui/react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import service from '../services/service';
@@ -36,33 +41,41 @@ const Login = ( props ) => {
   }
 
   return (
-    <form onSubmit={ onSubmit } >
-      <FormControl isRequired>
-        <Input 
-          id='username'
-          placeholder='Username'
-          onChange={ (e) => setUsername(e.target.value) }
-          value={ username }
-        />
-      </FormControl>
+    <Container w='100vw' h='100vh'>
+      <Center w='100%' h='100%'>
+        <Box p={5} shadow='md' borderWidth='1px'>
+          <form onSubmit={ onSubmit } >
+            <VStack>
+              <FormControl isRequired>
+                <Input 
+                  id='username'
+                  placeholder='Username'
+                  onChange={ (e) => setUsername(e.target.value) }
+                  value={ username }
+                />
+              </FormControl>
 
-      <FormControl isRequired>
-        <Input 
-          id='password'
-          type='password'
-          placeholder='Password'
-          onChange={ (e) => setPassword(e.target.value) }
-          value={ password } />
-      </FormControl>
+              <FormControl isRequired>
+                <Input 
+                  id='password'
+                  type='password'
+                  placeholder='Password'
+                  onChange={ (e) => setPassword(e.target.value) }
+                  value={ password } />
+              </FormControl>
 
-      <Button variant='outline' type='submit' >
-        Login
-      </Button>
+              <Button type='submit' colorScheme='green' >
+                Login
+              </Button>
 
-      <NavLink to='/signup' >
-        Need to create an account?
-      </NavLink>
-    </form>
+              <NavLink to='/signup' >
+                <Text color='green.500'>Need to create an account?</Text>
+              </NavLink>
+            </VStack>
+          </form>
+        </Box>
+      </Center>
+    </Container>
   )
 }
 
