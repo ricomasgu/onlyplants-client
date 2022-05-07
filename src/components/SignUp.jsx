@@ -50,8 +50,8 @@ const SignUp = ( props ) => {
   }
 
   return (
-    <Container w='100%' mt={5}>
-      <Center>
+    <Container w='100vw' h='100vh'>
+      <Center w='100%' h='100%'>
         <Box p={5} shadow='md' borderWidth='1px'>
           <form onSubmit={ onSubmit } >
             <VStack>
