@@ -83,10 +83,10 @@ function App() {
 						}
 					/>
 					<Route
-						path="/post/:postdetail"
+						path="/post/:postId"
 						element={
 							loggedIn ? (
-								<PostDetail {...userState} />
+								<PostDetail userState={userState} />
 							) : (
 								<Navigate to="/signup" />
 							)
