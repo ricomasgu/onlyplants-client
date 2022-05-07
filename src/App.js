@@ -6,6 +6,7 @@ import AddPost from './views/AddPost';
 import PostDetail from './views/PostDetail';
 import Login from './components/Login';
 import Feed from './views/Feed';
+import ProtectedRoutes from './components/ProtectedRoutes';
 
 import service from './services/service';
 import { Spinner } from '@chakra-ui/react';
@@ -45,53 +46,47 @@ function App() {
 			) : (
 				<Routes>
 					<Route
-						index
+						path='/'
 						element={
-							loggedIn ? <Navigate to="/feed" /> : <Navigate to="/signup" />
+							loggedIn ? <Navigate to="/feed" replace /> : <Navigate to="/signup" replace />
 						}
 					/>
-					<Route
-						path="/signup"
-						element={
-							!loggedIn ? (
+					
+					<Route element={ <ProtectedRoutes loggedIn={ loggedIn } redirection={'/feed'} />} >
+						<Route 
+							path="/signup"
+							element={
 								<SignUp setUserState={setUserState} setLoggedIn={setLoggedIn} />
-							) : (
-								<Navigate to="/feed" />
-							)
-						}
-					/>
-					<Route
-						path="/login"
-						element={
-							!loggedIn ? (
+							}
+						/>
+						<Route
+							path="/login"
+							element={
 								<Login setUserState={setUserState} setLoggedIn={setLoggedIn} />
-							) : (
-								<Navigate to="/feed" />
-							)
-						}
-					/>
-					<Route
-						path="/feed"
-						element={
-							loggedIn ? <Feed {...userState} /> : <Navigate to="/signup" />
-						}
-					/>
-					<Route
-						path="/post"
-						element={
-							loggedIn ? <AddPost {...userState} /> : <Navigate to="/signup" />
-						}
-					/>
-					<Route
-						path="/post/:postId"
-						element={
-							loggedIn ? (
+							}
+						/>
+					</Route>
+
+					<Route element={ <ProtectedRoutes loggedIn={ !loggedIn } redirection={'/signup'} />}>
+						<Route
+							path="/feed"
+							element={
+								<Feed {...userState} setUserState={setUserState} setLoggedIn={setLoggedIn} />
+							}
+						/>
+						<Route
+							path="/post"
+							element={
+								<AddPost {...userState} />
+							}
+						/>
+						<Route
+							path="/post/:postId"
+							element={
 								<PostDetail userState={userState} />
-							) : (
-								<Navigate to="/signup" />
-							)
-						}
-					/>
+							}
+						/>
+					</Route>
 				</Routes>
 			)}
 		</div>
