@@ -67,6 +67,10 @@ class Service {
 			withCredentials: true,
 		});
 	};
+
+	getFeed = (userId, limit) => {
+		return axios.post(`${this.baseUrl}/feed`, { userId, limit });
+	};
 }
 
 const postService = new Service();

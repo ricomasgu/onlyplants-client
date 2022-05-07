@@ -73,7 +73,11 @@ function App() {
 					<Route
 						path="/feed"
 						element={
-							loggedIn ? <Feed {...userState} /> : <Navigate to="/signup" />
+							loggedIn ? (
+								<Feed userState={userState} />
+							) : (
+								<Navigate to="/signup" />
+							)
 						}
 					/>
 					<Route
