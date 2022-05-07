@@ -125,9 +125,11 @@ const Post = (props) => {
 						</Flex>
 					)}
 					<Container h="400px">
-						<Center>
-							<Image src={post.imageUrl} maxH="400px" maxW="400px" />
-						</Center>
+						<Link to={`/post/${post._id}`}>
+							<Center>
+								<Image src={post.imageUrl} maxH="400px" maxW="400px" />
+							</Center>
+						</Link>
 					</Container>
 					<Container>
 						<Flex align="center" gap="2" pt="25px">

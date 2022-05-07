@@ -63,26 +63,31 @@ function App() {
 							path="/login"
 							element={
 								<Login setUserState={setUserState} setLoggedIn={setLoggedIn} />
-							}
-						/>
-					</Route>
-
-					<Route element={ <ProtectedRoutes loggedIn={ !loggedIn } redirection={'/signup'} />}>
-						<Route
-							path="/feed"
-							element={
-								<Feed {...userState} setUserState={setUserState} setLoggedIn={setLoggedIn} />
-							}
-						/>
-						<Route
-							path="/post"
-							element={
-								<AddPost {...userState} />
-							}
-						/>
-						<Route
-							path="/post/:postId"
-							element={
+							) : (
+								<Navigate to="/feed" />
+							)
+						}
+					/>
+					<Route
+						path="/feed"
+						element={
+							loggedIn ? (
+								<Feed userState={userState} />
+							) : (
+								<Navigate to="/signup" />
+							)
+						}
+					/>
+					<Route
+						path="/post"
+						element={
+							loggedIn ? <AddPost {...userState} /> : <Navigate to="/signup" />
+						}
+					/>
+					<Route
+						path="/post/:postId"
+						element={
+							loggedIn ? (
 								<PostDetail userState={userState} />
 							}
 						/>
