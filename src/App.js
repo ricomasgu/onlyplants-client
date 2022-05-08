@@ -46,7 +46,13 @@ function App() {
 				/>
 			) : (
 				<>
-					{ loggedIn ? ( <Navbar setUserState={setUserState} setLoggedIn={setLoggedIn}/> ) : (<></>) }
+					{ loggedIn ? (
+						<Navbar 
+							userState={userState} 
+							setUserState={setUserState} 
+							setLoggedIn={setLoggedIn}
+						/> 
+					) : (<></>) }
 					<Routes>
 						<Route
 							index

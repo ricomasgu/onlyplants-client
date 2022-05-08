@@ -36,7 +36,7 @@ class Service {
   }
 
   logout() {
-    return axios.post(
+    return axios.delete(
       `${ this.baseURL }/auth/logout`,
       {
         withCredentials: true

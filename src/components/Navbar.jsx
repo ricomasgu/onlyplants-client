@@ -14,7 +14,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import service from '../services/service';
 
 const Navbar = (props) => {
-	const { username, avatar } = props;
+	const { username, avatar } = props.userState;
 
 	const navigate = useNavigate();
 
