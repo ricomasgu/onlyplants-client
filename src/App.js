@@ -8,6 +8,7 @@ import Login from './components/Login';
 import Feed from './views/Feed';
 import ProtectedRoutes from './components/ProtectedRoutes';
 import Navbar from './components/Navbar';
+import Explore from './views/Explore';
 
 import service from './services/service';
 import { Spinner } from '@chakra-ui/react';
@@ -46,59 +47,70 @@ function App() {
 				/>
 			) : (
 				<>
-					{ loggedIn ? (
-						<Navbar 
-							userState={userState} 
-							setUserState={setUserState} 
+					{loggedIn ? (
+						<Navbar
+							userState={userState}
+							setUserState={setUserState}
 							setLoggedIn={setLoggedIn}
-						/> 
-					) : (<></>) }
+						/>
+					) : (
+						<></>
+					)}
 					<Routes>
 						<Route
 							index
 							element={
-								loggedIn ? <Navigate to="/feed" replace /> : <Navigate to="/signup" replace />
+								loggedIn ? (
+									<Navigate to="/feed" replace />
+								) : (
+									<Navigate to="/signup" replace />
+								)
 							}
 						/>
-						
-						<Route element={ <ProtectedRoutes loggedIn={ loggedIn } redirection={'/feed'} />} >
-							<Route 
+
+						<Route
+							element={
+								<ProtectedRoutes loggedIn={loggedIn} redirection={'/feed'} />
+							}
+						>
+							<Route
 								path="/signup"
 								element={
-									<SignUp setUserState={setUserState} setLoggedIn={setLoggedIn} />
+									<SignUp
+										setUserState={setUserState}
+										setLoggedIn={setLoggedIn}
+									/>
 								}
 							/>
 							<Route
 								path="/login"
 								element={
-									<Login setUserState={setUserState} setLoggedIn={setLoggedIn} />
+									<Login
+										setUserState={setUserState}
+										setLoggedIn={setLoggedIn}
+									/>
 								}
 							/>
 						</Route>
 
-						<Route element={ <ProtectedRoutes loggedIn={ !loggedIn } redirection={'/signup'} />} >
+						<Route
+							element={
+								<ProtectedRoutes loggedIn={!loggedIn} redirection={'/signup'} />
+							}
+						>
+							<Route path="/feed" element={<Feed userState={userState} />} />
 							<Route
-								path="/feed"
-								element={
-									<Feed userState={userState} />
-								}
+								path="/explore"
+								element={<Explore userState={userState} />}
 							/>
-							<Route
-								path="/post"
-								element={
-									<AddPost {...userState} />
-								}
-							/>
+							<Route path="/post" element={<AddPost {...userState} />} />
 							<Route
 								path="/post/:postId"
-								element={
-										<PostDetail userState={userState} />
-									}
-								/>
+								element={<PostDetail userState={userState} />}
+							/>
 						</Route>
 
-						<Route path='*' element={<Navigate to='/' replace/>}>
-						</Route>
+						<Route path="*" element={<Navigate to="/" replace />}></Route>
 					</Routes>
 				</>
 			)}
