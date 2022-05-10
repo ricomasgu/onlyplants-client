@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react';
 import { NavLink, useNavigate } from 'react-router-dom';
 
-import service from '../services/service';
+import authService from '../api/authServices';
 
 const SignUp = ( props ) => {
   const [firstName, setFirstName] = useState('');
@@ -28,7 +28,7 @@ const SignUp = ( props ) => {
     event.preventDefault();
 
     try {
-      const resFromApi = await service.signup({
+      const resFromApi = await authService.signup({
         firstName,
         lastName,
         email,

@@ -10,7 +10,7 @@ import {
   VStack
 } from '@chakra-ui/react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import service from '../services/service';
+import authService from '../api/authServices';
 
 const Login = ( props ) => {
   const [username, setUsername] = useState('');
@@ -22,7 +22,7 @@ const Login = ( props ) => {
     event.preventDefault();
 
     try {
-      const resFromApi = await service.login({
+      const resFromApi = await authService.login({
         username,
         password
       });

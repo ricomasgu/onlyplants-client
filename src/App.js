@@ -8,8 +8,9 @@ import Login from './components/Login';
 import Feed from './views/Feed';
 import ProtectedRoutes from './components/ProtectedRoutes';
 import Navbar from './components/Navbar';
+import UserProfile from './components/UserProfile';
 
-import service from './services/service';
+import authService from './api/authServices';
 import { Spinner } from '@chakra-ui/react';
 
 function App() {
@@ -17,10 +18,10 @@ function App() {
 	const [loggedIn, setLoggedIn] = useState(false);
 	const [loading, setLoading] = useState(true);
 
+	//The order here is important.
 	const userLoggedIn = async () => {
-		setLoading(false);
 		try {
-			const resFromApi = await service.loggedIn();
+			const resFromApi = await authService.loggedIn();
 			setUserState(resFromApi.data);
 			if (typeof resFromApi.data === 'object') {
 				setLoggedIn(true);
@@ -28,6 +29,7 @@ function App() {
 		} catch (error) {
 			console.log(error);
 		}
+		setLoading(false);
 	};
 
 	useEffect(() => {
@@ -68,6 +70,7 @@ function App() {
 									<SignUp setUserState={setUserState} setLoggedIn={setLoggedIn} />
 								}
 							/>
+
 							<Route
 								path="/login"
 								element={
@@ -83,22 +86,31 @@ function App() {
 									<Feed userState={userState} />
 								}
 							/>
+
 							<Route
 								path="/post"
 								element={
-									<AddPost {...userState} />
+									<AddPost userState={userState} setUserState={setUserState} />
 								}
 							/>
+
 							<Route
 								path="/post/:postId"
 								element={
-										<PostDetail userState={userState} />
-									}
-								/>
+									<PostDetail userState={userState} />
+								}
+							/>
+	
+							<Route
+								path="/profile"
+								element={
+									<UserProfile userState={userState} />
+								}
+							/>
 						</Route>
 
-						<Route path='*' element={<Navigate to='/' replace/>}>
-						</Route>
+						<Route path='*' element={<Navigate to='/' replace/>} />
+
 					</Routes>
 				</>
 			)}
