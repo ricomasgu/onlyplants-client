@@ -71,6 +71,18 @@ class Service {
 	getFeed = (userId, limit) => {
 		return axios.post(`${this.baseUrl}/feed`, { userId, limit });
 	};
+
+	getExplore = () => {
+		return axios.get(`${this.baseUrl}/explore`);
+	};
+
+	getSearchPost = (searchValue) => {
+		return axios.post(`${this.baseUrl}/explore/postSearch`, { searchValue });
+	};
+
+	getSearchUser = (searchValue) => {
+		return axios.post(`${this.baseUrl}/explore/userSearch`, { searchValue });
+	};
 }
 
 const postService = new Service();
