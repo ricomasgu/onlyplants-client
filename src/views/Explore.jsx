@@ -1,6 +1,15 @@
 import React from 'react';
-import { Container, Center, Button, Input } from '@chakra-ui/react';
+import {
+	Container,
+	Center,
+	Button,
+	Input,
+	Grid,
+	GridItem,
+} from '@chakra-ui/react';
 import postService from '../api/postServices';
+import PostCard from '../components/PostCard';
+import UserCard from '../components/UserCard';
 
 const Explore = () => {
 	const [posts, setPosts] = React.useState([]);
@@ -35,10 +44,32 @@ const Explore = () => {
 		}
 	};
 
+	const postList =
+		posts.length > 0 ? (
+			posts.map((post) => (
+				<GridItem key={post._id}>
+					<PostCard post={post} />
+				</GridItem>
+			))
+		) : (
+			<></>
+		);
+
+	const userList =
+		users.length > 0 ? (
+			users.map((user) => (
+				<div key={user._id}>
+					<UserCard user={user} />
+				</div>
+			))
+		) : (
+			<></>
+		);
+
 	return (
 		<div>
 			<form onSubmit={handleSubmit}>
-				<Container mt="25px">
+				<Container mt="25px" mb="25px">
 					<Center gap="2">
 						<Input
 							variant="filled"
@@ -54,6 +85,12 @@ const Explore = () => {
 					</Center>
 				</Container>
 			</form>
+			<div>
+				<Grid templateColumns="repeat(4, 1fr)" gap={4}>
+					{postList}
+				</Grid>
+			</div>
+			<div>{userList}</div>
 		</div>
 	);
 };
