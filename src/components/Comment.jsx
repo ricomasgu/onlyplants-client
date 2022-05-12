@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Center, Container, Textarea } from '@chakra-ui/react';
 
-import postService from '../api/postServices';
+import postService from '../services/postServices';
 
 const Comment = (props) => {
 	const { userState, post, setPost } = props;

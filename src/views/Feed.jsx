@@ -1,6 +1,6 @@
 import { Container, Button, Center } from '@chakra-ui/react';
 import React from 'react';
-import postService from '../api/postServices';
+import postService from '../services/postServices';
 import Post from '../components/Post';
 
 const Feed = (props) => {

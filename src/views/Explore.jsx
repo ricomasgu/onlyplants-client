@@ -7,7 +7,7 @@ import {
 	Grid,
 	GridItem,
 } from '@chakra-ui/react';
-import postService from '../api/postServices';
+import postService from '../services/postServices';
 import PostCard from '../components/PostCard';
 import UserCard from '../components/UserCard';
 
