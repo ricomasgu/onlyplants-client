@@ -12,6 +12,8 @@ import Explore from './views/Explore';
 
 import service from './services/service';
 import { Spinner } from '@chakra-ui/react';
+import Followers from './views/Followers';
+import Following from './views/Following';
 
 function App() {
 	const [userState, setUserState] = useState('');
@@ -107,6 +109,14 @@ function App() {
 							<Route
 								path="/post/:postId"
 								element={<PostDetail userState={userState} />}
+							/>
+							<Route
+								path="/user/:userId/followers"
+								element={<Followers userState={userState} />}
+							/>
+							<Route
+								path="/user/:userId/following"
+								element={<Following userState={userState} />}
 							/>
 						</Route>
 
