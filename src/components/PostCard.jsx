@@ -7,7 +7,12 @@ const PostCard = (props) => {
 	return (
 		<Center>
 			<Link to={`/post/${post._id}`}>
-				<Image src={post.imageUrl} boxSize="200px" />
+				<Image
+					src={post.imageUrl}
+					boxSize="200px"
+					borderRadius="25px"
+					boxShadow="base"
+				/>
 			</Link>
 		</Center>
 	);

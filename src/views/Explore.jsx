@@ -11,7 +11,8 @@ import postService from '../services/postServices';
 import PostCard from '../components/PostCard';
 import UserCard from '../components/UserCard';
 
-const Explore = () => {
+const Explore = (props) => {
+	const { userState } = props;
 	const [posts, setPosts] = React.useState([]);
 	const [users, setUsers] = React.useState([]);
 	const [searchValue, setSearchValue] = React.useState('');
@@ -59,7 +60,7 @@ const Explore = () => {
 		users.length > 0 ? (
 			users.map((user) => (
 				<div key={user._id}>
-					<UserCard user={user} />
+					<UserCard foundUser={user} userState={userState} />
 				</div>
 			))
 		) : (
