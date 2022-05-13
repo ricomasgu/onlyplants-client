@@ -10,9 +10,10 @@ import ProtectedRoutes from './components/ProtectedRoutes';
 import Navbar from './components/Navbar';
 import UserProfile from './components/UserProfile';
 import Explore from './views/Explore';
+import Loading from './components/Loading';
+import UserDetails from './views/UserDetails';
 
 import authService from './api/authServices';
-import { Spinner } from '@chakra-ui/react';
 
 function App() {
 	const [userState, setUserState] = useState('');
@@ -40,13 +41,7 @@ function App() {
 	return (
 		<div className="App">
 			{loading ? (
-				<Spinner
-					thickness="4px"
-					speed="0.65s"
-					emptyColor="gray.200"
-					color="red.500"
-					size="xl"
-				/>
+				<Loading />
 			) : (
 				<>
 					{loggedIn ? (
@@ -132,7 +127,21 @@ function App() {
 							<Route
 								path="/profile"
 								element={
-									<UserProfile userState={userState} />
+									<UserProfile userInfo={userState} itIsMe={true} />
+								}
+							/>
+
+							<Route
+								path="/profile/settings"
+								element={
+									<UserProfile userState={userState} setUserState={setUserState} />
+								}
+							/>
+
+							<Route
+								path="/user/:userId"
+								element={
+									<UserDetails />
 								}
 							/>
 						</Route>

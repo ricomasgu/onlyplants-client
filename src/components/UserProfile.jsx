@@ -10,14 +10,13 @@ import {
   VStack,
   Flex,
   StackDivider,
-  Image,
   Grid,
-  GridItem
+  GridItem,
+  Link
 } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
-import postService from '../api/postServices';
-import Post from './Post';
+import PostCard from './PostCard';
 
 const UserProfile = ( props ) => {
   const {
@@ -26,12 +25,14 @@ const UserProfile = ( props ) => {
     posts,
     followers,
     following
-  } = props.userState;
+  } = props.userInfo;
 
-  const componentsPosts = posts.map( (postId) => {
+  const itIsMe = props.itIsMe;
+
+  const componentsPosts = posts.map( (post) => {
     return (
-      <GridItem key={`userprofile-${postId}`} >
-        <Post postId={postId} userState={props.userState}/>
+      <GridItem key={`userprofile-${post._id}`} >
+        <PostCard postId={post._id} post={post}/>
       </GridItem>
     );
   });
@@ -46,7 +47,16 @@ const UserProfile = ( props ) => {
                 <Avatar size='xl' src={ avatar } mr='1rem'/>
                 <Heading> { username } </Heading>
               </Flex>
-              <Button colorScheme='green' >Follow</Button>
+              { !itIsMe ? 
+                <Flex direction='column'>
+                  <Button colorScheme='green' >Follow</Button>
+                  <Button colorScheme='red' >Message</Button>
+                </Flex>
+                : 
+                <Link to='/profile/settings'>
+                  <Button colorScheme='blue'>Settings</Button>
+                </Link>
+              }
             </Flex>
             <Flex w='100%' justify='center' mt='1rem'>
               <VStack m='1rem'>
