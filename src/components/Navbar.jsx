@@ -14,9 +14,11 @@ import {
 	FormLabel,
 	Text,
 	useColorModeValue,
+	Image,
 } from '@chakra-ui/react';
 import { Link, useNavigate } from 'react-router-dom';
 import authService from '../services/authServices';
+import logo from '../assets/plant.png';
 
 const Navbar = (props) => {
 	const { username, avatar } = props.userState;
@@ -44,11 +46,8 @@ const Navbar = (props) => {
 					<Spacer />
 					<HStack spacing="24px">
 						<Box p="2">
-							<Center gap="2">
-								<Avatar
-									src="https://upload.wikimedia.org/wikipedia/commons/3/35/Berry_plant_illustration.png"
-									size="sm"
-								/>
+							<Center>
+								<Image src={logo} size="sm" boxSize="30px" />
 								<Heading size="md">OnlyPlants</Heading>
 							</Center>
 						</Box>

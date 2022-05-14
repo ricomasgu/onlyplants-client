@@ -1,11 +1,21 @@
 import React from 'react';
-import { Button, Center, Container, Textarea } from '@chakra-ui/react';
+import {
+	Button,
+	Center,
+	Container,
+	Textarea,
+	useColorModeValue,
+} from '@chakra-ui/react';
 
 import postService from '../services/postServices';
 
 const Comment = (props) => {
 	const { userState, post, setPost } = props;
 	const [comment, setComment] = React.useState('');
+
+	const bg = useColorModeValue('white', 'gray.200');
+	const color = useColorModeValue('black', 'gray.800');
+	const borderColor = useColorModeValue('gray.200', 'gray.400');
 
 	const handleCommentChange = (event) => {
 		setComment(event.target.value);
@@ -41,7 +51,7 @@ const Comment = (props) => {
 	};
 	return (
 		<div>
-			<Container mt="25px" mb="25px">
+			<Container mt="25px" mb="25px" color={color}>
 				<form onSubmit={handleCommentSubmit}>
 					<Textarea
 						placeholder="Add a Comment"
@@ -49,6 +59,10 @@ const Comment = (props) => {
 						name="comment"
 						value={comment}
 						onChange={handleCommentChange}
+						bg={bg}
+						color={color}
+						_placeholder={{ color: 'gray' }}
+						borderColor={borderColor}
 					></Textarea>
 					<Center gap="4">
 						<Button variant="outline" colorScheme="green" type="submit">
