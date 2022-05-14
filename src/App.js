@@ -13,7 +13,7 @@ import Explore from './views/Explore';
 import Loading from './components/Loading';
 import UserDetails from './views/UserDetails';
 
-import authService from './api/authServices';
+import authService from './services/authServices';
 import Followers from './views/Followers';
 import Following from './views/Following';
 

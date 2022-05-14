@@ -10,7 +10,7 @@ import {
   VStack
 } from '@chakra-ui/react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import authService from '../api/authServices';
+import authService from '../services/authServices';
 
 const Login = ( props ) => {
   const [username, setUsername] = useState('');

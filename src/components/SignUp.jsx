@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react';
 import { NavLink, useNavigate } from 'react-router-dom';
 
-import authService from '../api/authServices';
+import authService from '../services/authServices';
 
 const SignUp = ( props ) => {
   const [firstName, setFirstName] = useState('');

@@ -11,7 +11,7 @@ import {
 	Button,
 } from '@chakra-ui/react';
 import { Link, useNavigate } from 'react-router-dom';
-import authService from '../api/authServices';
+import authService from '../services/authServices';
 
 const Navbar = (props) => {
 	const { username, avatar } = props.userState;
