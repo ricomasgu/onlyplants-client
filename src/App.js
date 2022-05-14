@@ -14,6 +14,8 @@ import Loading from './components/Loading';
 import UserDetails from './views/UserDetails';
 
 import authService from './api/authServices';
+import Followers from './views/Followers';
+import Following from './views/Following';
 
 function App() {
 	const [userState, setUserState] = useState('');
@@ -143,6 +145,14 @@ function App() {
 								element={
 									<UserDetails />
 								}
+							/>
+							<Route
+								path="/user/:userId/followers"
+								element={<Followers userState={userState} />}
+							/>
+							<Route
+								path="/user/:userId/following"
+								element={<Following userState={userState} />}
 							/>
 						</Route>
 

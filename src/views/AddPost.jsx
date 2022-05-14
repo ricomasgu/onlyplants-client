@@ -11,7 +11,7 @@ import {
 	Image,
 	WrapItem,
 } from '@chakra-ui/react';
-import postService from '../api/postServices';
+import postService from '../services/postServices';
 
 const AddPost = (props) => {
 	const navigate = useNavigate();

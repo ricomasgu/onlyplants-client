@@ -11,7 +11,7 @@ import {
 	Stack,
 } from '@chakra-ui/react';
 import { Link, useNavigate } from 'react-router-dom';
-import postService from '../api/postServices';
+import postService from '../services/postServices';
 import Comment from '../components/Comment';
 
 const Post = (props) => {
