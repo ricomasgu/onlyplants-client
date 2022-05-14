@@ -1,4 +1,5 @@
-import { Container, Button, Center } from '@chakra-ui/react';
+import { Container, Button, Center, Text } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 import React from 'react';
 import postService from '../services/postServices';
 import Post from '../components/Post';
@@ -25,7 +26,12 @@ const Feed = (props) => {
 				</Container>
 			))
 		) : (
-			<></>
+			<Container align="center" mt="50px">
+				<Text fontSize="25px">Oooops... Nothing to find here. </Text>
+				<Text textColor="green">
+					<Link to="/explore">Discover new beautiful things</Link>
+				</Text>
+			</Container>
 		);
 
 	const handleLoad = () => {
@@ -35,11 +41,13 @@ const Feed = (props) => {
 	return (
 		<div>
 			<Container>{feedArray}</Container>
-			<Container mt="50px" mb="50px">
-				<Center>
-					<Button onClick={handleLoad}>Load More</Button>
-				</Center>
-			</Container>
+			{feed.length > 1 && (
+				<Container mt="50px" mb="50px">
+					<Center>
+						<Button onClick={handleLoad}>Load More</Button>
+					</Center>
+				</Container>
+			)}
 		</div>
 	);
 };
