@@ -16,7 +16,7 @@ import {
 	useColorModeValue,
 } from '@chakra-ui/react';
 import { Link, useNavigate } from 'react-router-dom';
-import service from '../services/service';
+import authService from '../services/authServices';
 
 const Navbar = (props) => {
 	const { username, avatar } = props.userState;
@@ -27,7 +27,7 @@ const Navbar = (props) => {
 
 	const handleLogout = async () => {
 		try {
-			await service.logout();
+			await authService.logout();
 
 			props.setUserState('');
 			props.setLoggedIn(false);

@@ -15,7 +15,7 @@ import postService from '../services/postServices';
 
 const AddPost = (props) => {
 	const navigate = useNavigate();
-	const { _id } = props;
+	const { _id, posts } = props.userState;
 	const [plantType, setPlantType] = React.useState('');
 	const [description, setDescription] = React.useState('');
 	const [image, setImage] = React.useState('');
@@ -45,7 +45,9 @@ const AddPost = (props) => {
 			description,
 			_id
 		);
-		navigate(`/post/${createdPost.data._id}`);
+		const newPostId = createdPost.data._id;
+		props.setUserState({ ...props.userState, posts: [ ...posts, newPostId ] });
+		navigate(`/post/${newPostId}`);
 		handleCancel();
 	};
 	return (

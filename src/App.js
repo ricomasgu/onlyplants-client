@@ -8,10 +8,12 @@ import Login from './components/Login';
 import Feed from './views/Feed';
 import ProtectedRoutes from './components/ProtectedRoutes';
 import Navbar from './components/Navbar';
+import UserProfile from './components/UserProfile';
 import Explore from './views/Explore';
+import Loading from './components/Loading';
+import UserDetails from './views/UserDetails';
 
-import service from './services/service';
-import { Spinner } from '@chakra-ui/react';
+import authService from './services/authServices';
 import Followers from './views/Followers';
 import Following from './views/Following';
 
@@ -20,10 +22,10 @@ function App() {
 	const [loggedIn, setLoggedIn] = useState(false);
 	const [loading, setLoading] = useState(true);
 
+	//The order here is important.
 	const userLoggedIn = async () => {
-		setLoading(false);
 		try {
-			const resFromApi = await service.loggedIn();
+			const resFromApi = await authService.loggedIn();
 			setUserState(resFromApi.data);
 			if (typeof resFromApi.data === 'object') {
 				setLoggedIn(true);
@@ -31,6 +33,7 @@ function App() {
 		} catch (error) {
 			console.log(error);
 		}
+		setLoading(false);
 	};
 
 	useEffect(() => {
@@ -40,13 +43,7 @@ function App() {
 	return (
 		<div className="App">
 			{loading ? (
-				<Spinner
-					thickness="4px"
-					speed="0.65s"
-					emptyColor="gray.200"
-					color="red.500"
-					size="xl"
-				/>
+				<Loading />
 			) : (
 				<>
 					{loggedIn ? (
@@ -84,6 +81,7 @@ function App() {
 									/>
 								}
 							/>
+
 							<Route
 								path="/login"
 								element={
@@ -100,15 +98,53 @@ function App() {
 								<ProtectedRoutes loggedIn={!loggedIn} redirection={'/signup'} />
 							}
 						>
-							<Route path="/feed" element={<Feed userState={userState} />} />
+							<Route
+								path="/feed"
+								element={
+									<Feed userState={userState} />
+								}
+							/>
+
 							<Route
 								path="/explore"
-								element={<Explore userState={userState} />}
+								element={
+									<Explore userState={userState} />
+								}
 							/>
-							<Route path="/post" element={<AddPost {...userState} />} />
+
+							<Route
+								path="/post"
+								element={
+									<AddPost userState={userState} setUserState={setUserState} />
+								}
+							/>
+
 							<Route
 								path="/post/:postId"
-								element={<PostDetail userState={userState} />}
+								element={
+									<PostDetail userState={userState} />
+								}
+							/>
+	
+							<Route
+								path="/profile"
+								element={
+									<UserProfile userInfo={userState} itIsMe={true} />
+								}
+							/>
+
+							<Route
+								path="/profile/settings"
+								element={
+									<UserProfile userState={userState} setUserState={setUserState} />
+								}
+							/>
+
+							<Route
+								path="/user/:userId"
+								element={
+									<UserDetails />
+								}
 							/>
 							<Route
 								path="/user/:userId/followers"
@@ -120,7 +156,8 @@ function App() {
 							/>
 						</Route>
 
-						<Route path="*" element={<Navigate to="/" replace />}></Route>
+						<Route path='*' element={<Navigate to='/' replace/>} />
+						
 					</Routes>
 				</>
 			)}
