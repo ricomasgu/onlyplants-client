@@ -83,10 +83,6 @@ class Service {
 	getSearchUser = (searchValue) => {
 		return axios.post(`${this.baseUrl}/explore/userSearch`, { searchValue });
 	};
-
-	getUser = (userId) => {
-		return axios.post(`${this.baseUrl}/user /${userId}`);
-	};
 }
 
 const postService = new Service();

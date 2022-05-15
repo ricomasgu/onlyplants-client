@@ -26,6 +26,10 @@ class Service {
 			userToUnfollow,
 		});
 	};
+
+	getUser = (userId) => {
+		return axios.get(`${this.baseUrl}/user/${userId}`);
+	};
 }
 
 const userService = new Service();
