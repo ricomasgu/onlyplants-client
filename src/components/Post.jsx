@@ -9,6 +9,7 @@ import {
 	Spacer,
 	Button,
 	Stack,
+	useColorModeValue,
 } from '@chakra-ui/react';
 import { Link, useNavigate } from 'react-router-dom';
 import postService from '../services/postServices';
@@ -20,6 +21,9 @@ const Post = (props) => {
 	const [isAdmin, setIsAdmin] = React.useState(false);
 	const [liked, setLiked] = React.useState(false);
 	const [post, setPost] = React.useState({});
+
+	const bg = useColorModeValue('white', 'gray.200');
+	const color = useColorModeValue('black', 'gray.800');
 
 	React.useEffect(() => {
 		async function fetch(postId) {
@@ -111,6 +115,9 @@ const Post = (props) => {
 					pt="25px"
 					pb="25px"
 					boxShadow="xl"
+					bg={bg}
+					color={color}
+					mt="25px"
 				>
 					{isAdmin && (
 						<Flex justify="right" gap="2">
