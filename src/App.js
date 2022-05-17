@@ -16,6 +16,7 @@ import UserDetails from './views/UserDetails';
 import authService from './services/authServices';
 import Followers from './views/Followers';
 import Following from './views/Following';
+import ChatRoom from './views/ChatRoom';
 
 function App() {
 	const [userState, setUserState] = useState('');
@@ -98,18 +99,11 @@ function App() {
 								<ProtectedRoutes loggedIn={!loggedIn} redirection={'/signup'} />
 							}
 						>
-							<Route
-								path="/feed"
-								element={
-									<Feed userState={userState} />
-								}
-							/>
+							<Route path="/feed" element={<Feed userState={userState} />} />
 
 							<Route
 								path="/explore"
-								element={
-									<Explore userState={userState} />
-								}
+								element={<Explore userState={userState} />}
 							/>
 
 							<Route
@@ -121,31 +115,25 @@ function App() {
 
 							<Route
 								path="/post/:postId"
-								element={
-									<PostDetail userState={userState} />
-								}
+								element={<PostDetail userState={userState} />}
 							/>
-	
+
 							<Route
 								path="/profile"
-								element={
-									<UserProfile userInfo={userState} itIsMe={true} />
-								}
+								element={<UserProfile userInfo={userState} itIsMe={true} />}
 							/>
 
 							<Route
 								path="/profile/settings"
 								element={
-									<UserProfile userState={userState} setUserState={setUserState} />
+									<UserProfile
+										userState={userState}
+										setUserState={setUserState}
+									/>
 								}
 							/>
 
-							<Route
-								path="/user/:userId"
-								element={
-									<UserDetails />
-								}
-							/>
+							<Route path="/user/:userId" element={<UserDetails />} />
 							<Route
 								path="/user/:userId/followers"
 								element={<Followers userState={userState} />}
@@ -154,10 +142,13 @@ function App() {
 								path="/user/:userId/following"
 								element={<Following userState={userState} />}
 							/>
+							<Route
+								path="/chat/chatroom"
+								element={<ChatRoom userState={userState} />}
+							/>
 						</Route>
 
-						<Route path='*' element={<Navigate to='/' replace/>} />
-						
+						<Route path="*" element={<Navigate to="/" replace />} />
 					</Routes>
 				</>
 			)}
