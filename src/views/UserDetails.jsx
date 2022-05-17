@@ -31,7 +31,7 @@ const UserDetails = () => {
 			{loading ? (
 				<Loading />
 			) : (
-				<UserProfile userInfo={userInfo} itIsMe={false} />
+				<UserProfile userInfo={userInfo} itIsMe={false} {...props} />
 			)}
 		</>
 	);
