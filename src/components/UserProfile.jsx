@@ -49,6 +49,7 @@ const UserProfile = ( props ) => {
     navigate(`/chats/${chat.data._id}`);
   }
 
+  console.log(posts);
   const componentsPosts = posts.map( (post) => {
     return (
       <GridItem key={`userprofile-${post._id}`} >
