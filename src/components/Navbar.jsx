@@ -49,6 +49,9 @@ const Navbar = (props) => {
 						<Box>
 							<Link to="/post">Post</Link>
 						</Box>
+						<Box>
+							<Link to="/chats">Chats</Link>
+						</Box>
 					</HStack>
 					<Spacer />
 					<Wrap>
