@@ -43,7 +43,8 @@ const UserProfile = ( props ) => {
     const chat = await chatService.createChat({ userId, userSelectedId });
     
     //Adding the id of the chat to the state
-    props.setUserState({ ...props.userState, chat: [props.userState.chat, chat.data._id]});
+    console.log('chat',chat,'props.userState',props.userState);
+    props.setUserState({ ...props.userState, chats: [ ...props.userState.chats, chat.data._id]});
 
     //navigating to the chat
     navigate(`/chats/${chat.data._id}`);
