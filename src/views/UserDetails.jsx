@@ -1,4 +1,5 @@
-import React, { useEffect, useParams, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 import postService from '../services/postServices';
 import Loading from '../components/Loading';

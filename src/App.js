@@ -2,21 +2,23 @@ import React, { useEffect, useState } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
 import SignUp from './components/SignUp';
-import AddPost from './views/AddPost';
-import PostDetail from './views/PostDetail';
 import Login from './components/Login';
-import Feed from './views/Feed';
 import ProtectedRoutes from './components/ProtectedRoutes';
 import Navbar from './components/Navbar';
 import UserProfile from './components/UserProfile';
-import Explore from './views/Explore';
 import Loading from './components/Loading';
-import UserDetails from './views/UserDetails';
 
-import authService from './services/authServices';
+import AddPost from './views/AddPost';
+import PostDetail from './views/PostDetail';
+import Feed from './views/Feed';
+import Explore from './views/Explore';
+import UserDetails from './views/UserDetails';
 import Followers from './views/Followers';
 import Following from './views/Following';
-import ChatRoom from './views/ChatRoom';
+import ChatList from './views/ChatList';
+import Chat from './views/Chat';
+
+import authService from './services/authServices';
 
 function App() {
 	const [userState, setUserState] = useState('');
@@ -120,31 +122,54 @@ function App() {
 
 							<Route
 								path="/profile"
-								element={<UserProfile userInfo={userState} itIsMe={true} />}
+								element={
+									<UserProfile
+										userInfo={userState}
+										userState={userState}
+										itIsMe={true}
+									/>
+								}
 							/>
 
 							<Route
 								path="/profile/settings"
 								element={
 									<UserProfile
+										userInfo={userState}
 										userState={userState}
 										setUserState={setUserState}
 									/>
 								}
 							/>
 
-							<Route path="/user/:userId" element={<UserDetails />} />
+							<Route
+								path="/user/:userId"
+								element={
+									<UserDetails
+										userState={userState}
+										setUserState={setUserState}
+									/>
+								}
+							/>
+
 							<Route
 								path="/user/:userId/followers"
 								element={<Followers userState={userState} />}
 							/>
+
 							<Route
 								path="/user/:userId/following"
 								element={<Following userState={userState} />}
 							/>
+
 							<Route
-								path="/chat/chatroom"
-								element={<ChatRoom userState={userState} />}
+								path="/chats"
+								element={<ChatList userState={userState} />}
+							/>
+
+							<Route
+								path="/chats/:chatId"
+								element={<Chat userState={userState} />}
 							/>
 						</Route>
 

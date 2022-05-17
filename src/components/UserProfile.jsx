@@ -15,11 +15,14 @@ import {
   Link
 } from '@chakra-ui/react';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import chatService from '../services/chatServices';
 
 import PostCard from './PostCard';
 
 const UserProfile = ( props ) => {
   const {
+    _id: userSelectedId,
     avatar,
     username,
     posts,
@@ -27,7 +30,24 @@ const UserProfile = ( props ) => {
     following
   } = props.userInfo;
 
+  const {
+    _id: userId,
+  } = props.userState;
+
+  const navigate = useNavigate();
+
   const itIsMe = props.itIsMe;
+
+  const handleClick = async () => {
+    //create a chat involving the two users
+    const chat = await chatService.createChat({ userId, userSelectedId });
+    
+    //Adding the id of the chat to the state
+    props.setUserState({ ...props.userState, chat: [props.userState.chat, chat.data._id]});
+
+    //navigating to the chat
+    navigate(`/chats/${chat.data._id}`);
+  }
 
   const componentsPosts = posts.map( (post) => {
     return (
@@ -38,10 +58,10 @@ const UserProfile = ( props ) => {
   });
 
   return (
-    <Container w='100vw' >
+    <Container w='100vw'>
       <VStack>
-        <Center w='100%' >
-          <Box w='100%' >
+        <Center w='100%'>
+          <Box w='100%'>
             <Flex w='100%' justify='space-around' align='center' mt='1rem'>
               <Flex align='flex-end'>
                 <Avatar size='xl' src={ avatar } mr='1rem'/>
@@ -50,7 +70,7 @@ const UserProfile = ( props ) => {
               { !itIsMe ? 
                 <Flex direction='column'>
                   <Button colorScheme='green' >Follow</Button>
-                  <Button colorScheme='red' >Message</Button>
+                  <Button colorScheme='red' onClick={handleClick} >Message</Button>
                 </Flex>
                 : 
                 <Link to='/profile/settings'>

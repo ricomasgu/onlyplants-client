@@ -12,7 +12,7 @@ import React from 'react';
 import userServices from '../services/userServices';
 
 const UserCard = (props) => {
-	const { foundUser, userState } = props;
+	const { foundUser, userState, isChat } = props;
 	const [isFollowed, setIsFollowed] = React.useState(false);
 	const [user, setUser] = React.useState(foundUser);
 
@@ -83,31 +83,35 @@ const UserCard = (props) => {
 					</Button>
 				)}
 			</Flex>
-			<Flex align="center" gap="6" mt="15px">
-				<Spacer />
-				<Link to={`/user/${user._id}/`}>
-					{user.posts ? (
-						<Text>{user.posts.length} Posts</Text>
-					) : (
-						<Text>0 Posts</Text>
-					)}
-				</Link>
-				<Link to={`/user/${user._id}/followers`}>
-					{user.followers ? (
-						<Text>{user.followers.length} Followers</Text>
-					) : (
-						<Text>0 Followers</Text>
-					)}
-				</Link>
-				<Link to={`/user/${user._id}/following`}>
-					{user.following ? (
-						<Text>{user.following.length} Following</Text>
-					) : (
-						<Text>0 Following</Text>
-					)}
-				</Link>
-				<Spacer />
-			</Flex>
+			{ isChat ? 
+				<Text>Last Message</Text>
+				:
+				<Flex align="center" gap="6" mt="15px">
+					<Spacer />
+					<Link to={`/user/${user._id}/`}>
+						{user.posts ? (
+							<Text>{user.posts.length} Posts</Text>
+						) : (
+							<Text>0 Posts</Text>
+						)}
+					</Link>
+					<Link to={`/user/${user._id}/followers`}>
+						{user.followers ? (
+							<Text>{user.followers.length} Followers</Text>
+						) : (
+							<Text>0 Followers</Text>
+						)}
+					</Link>
+					<Link to={`/user/${user._id}/following`}>
+						{user.following ? (
+							<Text>{user.following.length} Following</Text>
+						) : (
+							<Text>0 Following</Text>
+						)}
+					</Link>
+					<Spacer />
+				</Flex>
+			}
 		</Container>
 	);
 };
