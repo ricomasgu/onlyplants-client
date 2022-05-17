@@ -9,12 +9,12 @@ class Service {
 		return axios.post(`${this.baseUrl}/createChat`, participantIds);
 	};
 
-  getUserChats = (userId) => {
+	getUserChats = (userId) => {
 		return axios.get(`${this.baseUrl}/getChats`, userId);
-  };
+	};
 
-	getChatInfo = (chatId) => {
-		return axios.get(`${this.baseUrl}/getChat`, chatId);
+	getChatInfo = (userId, chatId) => {
+		return axios.post(`${this.baseUrl}/getChat`, { userId, chatId });
 	};
 }
 
