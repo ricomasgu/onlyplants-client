@@ -38,7 +38,9 @@ const ChatList = (props) => {
   };
 
   useEffect( () => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     getChats();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
 
   return (
