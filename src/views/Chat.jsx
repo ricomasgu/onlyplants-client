@@ -14,7 +14,6 @@ import {
 } from '@chakra-ui/react';
 import chatService from '../services/chatServices';
 import { useParams } from 'react-router-dom';
-import { findAllByDisplayValue } from '@testing-library/react';
 const { io } = require('socket.io-client');
 
 const Chat = (props) => {
@@ -40,6 +39,7 @@ const Chat = (props) => {
 
 	useEffect(() => {
 		getChat();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {
@@ -52,6 +52,7 @@ const Chat = (props) => {
 				setMessages([...messages, message]);
 			});
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isAllowed]);
 
 	const sendMessage = (event) => {
