@@ -2,7 +2,7 @@ import axios from 'axios';
 
 class Service {
   constructor (){
-    this.baseURL = process.env.REACT_APP_BASE_URL || 'http://localhost:5005/api';
+    this.baseURL = process.env.REACT_APP_BASE_URL || 'https://onlyplants.herokuapp.com/api';
   }
 
   signup( userInput ) {

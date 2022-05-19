@@ -2,7 +2,7 @@ import axios from 'axios';
 
 class Service {
 	constructor() {
-		this.baseUrl = process.env.REACT_APP_BASE_URL || 'http://localhost:5005/api';
+		this.baseUrl = process.env.REACT_APP_BASE_URL || 'https://onlyplants.herokuapp.com/api';
 	}
 
 	getFollowers = (userId) => {
